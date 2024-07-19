@@ -1,0 +1,1 @@
+ALTER TABLE "task" RENAME COLUMN "is_published" TO "is_active";

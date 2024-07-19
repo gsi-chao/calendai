@@ -13,13 +13,15 @@
 - [x] Instalar AI SDK Vercel
   - [x] Configurar modelo de gemini
 - [x] Instalar y configurar drizzle
-- [] Desplegar en Vercel
-- [] Crear instancia de Base de Datos Postgresql en Vercel
-- [ ] Crear esquema de base de datos para almacenar eventos de calendario
-- [ ] Crear migraciones para la base de datos
+- [x] Desplegar en Vercel
+- [x] Crear instancia de Base de Datos Postgresql en Vercel
+- [x] Crear esquema de base de datos para almacenar eventos de calendario
+- [x] Crear migraciones para la base de datos
 
 ## Requerimientos funcionales
 
+- [] Crear calendario del usuario al registrarse usando Clerk Webhook (<https://clerk.com/docs/integrations/webhooks/overview>)
+  - [] Crear function para crear calendario a usuario autenticado.
 - [ ] Crear un UI para mostrar y gestionar eventos de calendario
 - [ ] Implementar operaciones para manejar CRUD de eventos de calendario
 
