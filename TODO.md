@@ -22,8 +22,18 @@
 
 - [] Crear calendario del usuario al registrarse usando Clerk Webhook (<https://clerk.com/docs/integrations/webhooks/overview>)
   - [] Crear function para crear calendario a usuario autenticado.
-- [ ] Crear un UI para mostrar y gestionar eventos de calendario
+- [x] Crear un UI para mostrar y gestionar eventos de calendario
+
 - [ ] Implementar operaciones para manejar CRUD de eventos de calendario
+  - [x] Crear formulario para agregar eventos
+    - [x] Crear UI para la creacion de un evento
+    - [x] Integrar Novel.sh para la creación de eventos(WSGI)
+    - [] Integrar Novel.sh con Vercel AI SDK
+    - [] Generar sugerencia de título con Verce AI SDK
+    - [] Generar sugerencia de tags con Verce AI SDK
+    - [] Arreglar el bug cuando se copia el Markdown que no se formatea correctamente
+  - [] Crear formulario para editar eventos
+  - [] Eliminar eventos
 
 <!-- - Create a database schema for storing calendar events
 - Build a UI for displaying and managing calendar events

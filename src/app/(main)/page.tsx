@@ -1,9 +1,12 @@
-import Calendar from "@/components/calendar/calendar";
+import { _tasks } from "@/lib/server/_mock/events";
+import { CalendarTask } from "@/lib/server/types";
+import CalendarContainer from "./containers/calendar";
 
 export default function Home() {
+  const events: CalendarTask[] = _tasks;
   return (
     <div className="h-full w-full overflow-y-auto">
-      <Calendar height="calc(100vh - 64px" />
+      <CalendarContainer events={events} />
     </div>
   );
 }
