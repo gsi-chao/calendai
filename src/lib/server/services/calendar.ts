@@ -8,8 +8,7 @@ export const createCalendar = async (userId: string) => {
     throw new Error("The user id is required");
   }
   try {
-    db.insert(CalendarTable).values({ userId });
-    return { userId };
+    return await db.insert(CalendarTable).values({ userId }).returning();
   } catch (e) {
     throw new Error("Failed to create calendar");
   }

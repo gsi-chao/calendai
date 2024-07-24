@@ -21,7 +21,7 @@ export const createTask = async (event: CreateTaskType) => {
     throw new Error("You must be logged in to create a task");
   }
 
-  const response = db
+  const response = await db
     .insert(TaskTable)
     .values({
       title: event.title,
