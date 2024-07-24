@@ -1,3 +1,4 @@
+import { createTask } from "@/lib/server/services/task";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,11 +17,16 @@ const TaskFormContainer = () => {
     mode: "onSubmit",
   });
 
+  const onSubmitTask = async (values: z.infer<typeof taskFormSchema>) => {
+    const response = await createTask(values);
+    console.log("response", response);
+  };
+
   return (
     <FormProvider {...form}>
-      <TaskForm />
+      <TaskForm onSubmitTask={onSubmitTask} />
     </FormProvider>
   );
 };
 
-export default TaskFormContainer
+export default TaskFormContainer;

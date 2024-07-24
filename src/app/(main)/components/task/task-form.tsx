@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import AdvanceEditor from "@/components/rich_editor/advance-editor";
 import {
@@ -16,13 +16,17 @@ import { z } from "zod";
 import PostDateField from "./fields/post-date";
 import { taskFormSchema } from "./task-schema";
 
-const TaskForm = () => {
+type Props = {
+  onSubmitTask: (values: z.infer<typeof taskFormSchema>) => void;
+};
+
+const TaskForm: React.FC<Props> = ({ onSubmitTask }) => {
   const form = useFormContext<z.infer<typeof taskFormSchema>>();
+
   function onSubmit(values: z.infer<typeof taskFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    onSubmitTask(values);
   }
+  
   return (
     <Form {...form}>
       <form
@@ -51,7 +55,10 @@ const TaskForm = () => {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <AdvanceEditor onChange={field.onChange} initialValue={field.value} />
+                <AdvanceEditor
+                  onChange={field.onChange}
+                  initialValue={field.value}
+                />
               </FormControl>
               <FormDescription>You can use markdown format</FormDescription>
               <FormMessage />
@@ -67,12 +74,18 @@ const TaskForm = () => {
               <FormControl>
                 <Input placeholder="tags" {...field} />
               </FormControl>
-              <FormDescription>Enter the tags separated by coma.</FormDescription>
+              <FormDescription>
+                Enter the tags separated by coma.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <PostDateField control={form.control} name="postDate" label="Post Date" />
+        <PostDateField
+          control={form.control}
+          name="postDate"
+          label="Post Date"
+        />
       </form>
     </Form>
   );

@@ -1,0 +1,1 @@
+ALTER TABLE "calendar" ADD CONSTRAINT "calendar_user_id_unique" UNIQUE("user_id");

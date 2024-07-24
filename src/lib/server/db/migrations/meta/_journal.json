@@ -29,6 +29,20 @@
       "when": 1721487388355,
       "tag": "0003_concerned_speedball",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1721848286327,
+      "tag": "0004_minor_goblin_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1721850078939,
+      "tag": "0005_short_killer_shrike",
+      "breakpoints": true
     }
   ]
 }
