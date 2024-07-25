@@ -5,13 +5,18 @@ import { z } from "zod";
 import TaskForm from "./task-form";
 import { taskFormSchema } from "./task-schema";
 
-const TaskFormContainer = () => {
+type Props = {
+  defaultDate?: Date;
+  task?: z.infer<typeof taskFormSchema>;
+};
+
+const TaskFormContainer: React.FC<Props> = ({ defaultDate, task }) => {
   const form = useForm<z.infer<typeof taskFormSchema>>({
     defaultValues: {
-      title: "",
-      content: "",
-      tags: "",
-      postDate: new Date(),
+      title: task ? task.title : "",
+      content: task ? task.content : "",
+      tags: task ? task.tags : "",
+      postDate: task ? task.postDate : defaultDate ?? new Date(),
     },
     resolver: zodResolver(taskFormSchema),
     mode: "onSubmit",

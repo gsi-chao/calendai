@@ -12,9 +12,10 @@ import TaskFormContainer from "./task-form-container";
 type Props = {
   open: boolean;
   onOpenChange: () => void;
+  defaultDate?: Date;
 };
 
-export function NewTask({ open, onOpenChange }: Props) {
+export function NewTask({ open, onOpenChange, defaultDate }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal>
       <DialogContent className="min-w-[90%]  overflow-y-auto max-h-[90%]" >
@@ -24,7 +25,7 @@ export function NewTask({ open, onOpenChange }: Props) {
             Make changes to your profile here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <TaskFormContainer />
+        <TaskFormContainer defaultDate={defaultDate}/>
         <DialogFooter>
           <Button type="submit" form="task-form">Save changes</Button>
         </DialogFooter>

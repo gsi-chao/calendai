@@ -1,18 +1,22 @@
 "use client";
 
-import { CalendarTask } from "@/lib/server/types";
 import { CalendarOptions } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import * as datefns from "date-fns";
 
 type Props = {
-  events: CalendarTask[];
+  events: Event[];
   onEventClick?: (event: DateClickArg) => void;
   calendarRef?: React.RefObject<FullCalendar>;
 } & CalendarOptions;
+
+export type Event = {
+  title: string;
+  start: Date;
+  end: Date;
+};
 
 export default function Calendar({
   height,
@@ -23,17 +27,9 @@ export default function Calendar({
   ...props
 }: Props) {
   const handleDateClick = (arg: DateClickArg) => {
-    console.log(arg);
     onEventClick?.(arg);
   };
 
-  console.log(Object.keys(customButtons ?? {}).join(","));
-
-  const mapTaskToEvent = (calendarTask: CalendarTask) => ({
-    title: calendarTask.task.title,
-    start: calendarTask.postDate,
-    end: datefns.addHours(calendarTask.postDate, 1),
-  });
 
   return (
     <FullCalendar
@@ -47,7 +43,7 @@ export default function Calendar({
       selectable
       editable
       selectMirror
-      events={events.map(mapTaskToEvent)}
+      events={events}
       scrollTime={new Date().getHours() + ":00:00"}
       allDaySlot={false}
       slotLabelInterval={{ hours: 1 }}

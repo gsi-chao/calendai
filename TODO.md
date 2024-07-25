@@ -20,11 +20,17 @@
 
 ## Requerimientos funcionales
 
-- [] Crear calendario del usuario al registrarse usando Clerk Webhook (<https://clerk.com/docs/integrations/webhooks/overview>)
-  - [] Crear function para crear calendario a usuario autenticado.
+- [x] Crear calendario del usuario al registrarse usando Clerk Webhook (<https://clerk.com/docs/integrations/webhooks/overview>)
+  - [x] Crear function para crear calendario a usuario autenticado.
 - [x] Crear un UI para mostrar y gestionar eventos de calendario
+- [x] Obtener el calendario del usuario autenticado y los eventos del calendario
 
 - [ ] Implementar operaciones para manejar CRUD de eventos de calendario
+  - [x] Implementar servicios de eventos de calendario
+    - [x] Crear servicio para crear eventos de calendario
+    - [x] Crear servicio para obtener eventos de calendario
+    - [] Crear servicio para actualizar eventos de calendario
+    - [] Crear servicio para eliminar eventos de calendario
   - [x] Crear formulario para agregar eventos
     - [x] Crear UI para la creacion de un evento
     - [x] Integrar Novel.sh para la creación de eventos(WSGI)
@@ -35,11 +41,6 @@
   - [] Crear formulario para editar eventos
   - [] Eliminar eventos
 
-<!-- - Create a database schema for storing calendar events
-- Build a UI for displaying and managing calendar events
-- Implement CRUD operations for calendar events
-- Integrate with a natural language processing API for event parsing
-- Add functionality to invite and manage event attendees
-- Implement notifications for upcoming events
-- Write unit tests for the calendar manager functionality
-- Document the code and provide usage instructions -->
+  - [] UI Calendario
+    - [] Adicionar evento al hacer click en el calendario
+    - [] Cuando se pare sobre el calendario, mostrar un elemento para agregar un evento(stale)

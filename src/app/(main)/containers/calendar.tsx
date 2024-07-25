@@ -3,19 +3,27 @@
 import Calendar from "@/components/calendar/calendar";
 import { CalendarTask } from "@/lib/server/types";
 import { CustomButtonInput } from "@fullcalendar/core";
+import { DateClickArg } from "@fullcalendar/interaction/index.js";
 import FullCalendar from "@fullcalendar/react";
 import { useRef, useState } from "react";
+import { mapTasksToEvents } from "../adapters/events";
 import { NewTask } from "../components/task/new-task";
 
 type Props = {
-  events: CalendarTask[];
+  tasks: CalendarTask[];
 };
 
-const CalendarContainer = ({ events }: Props) => {
+const CalendarContainer = ({ tasks }: Props) => {
   const [open, setOpen] = useState(false);
-  const calendarRef = useRef<FullCalendar>(null)
+  const calendarRef = useRef<FullCalendar>(null);
+  const [defaultDate, setDefaultDate] = useState<Date | undefined>();
 
   const handleEventClick = () => {
+    setOpen(true);
+  };
+
+  const handleDateClick = (arg: DateClickArg) => {
+    setDefaultDate(arg.date);
     setOpen(true);
   };
 
@@ -30,12 +38,17 @@ const CalendarContainer = ({ events }: Props) => {
 
   return (
     <>
-      <NewTask open={open} onOpenChange={() => setOpen(!open)} />
+      <NewTask
+        open={open}
+        onOpenChange={() => setOpen(!open)}
+        defaultDate={defaultDate}
+      />
       <Calendar
         calendarRef={calendarRef}
         height="calc(100vh - 64px"
-        events={events}
+        events={mapTasksToEvents(tasks)}
         customButtons={customButtons()}
+        onEventClick={handleDateClick}
       />
     </>
   );
