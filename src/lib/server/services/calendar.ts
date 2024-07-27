@@ -19,7 +19,8 @@ export const createCalendar = async (userId: string) => {
 
 export const createCalendarTask = async (
   calendarId: number,
-  taskId: number
+  taskId: number,
+  postDate: Date
 ) => {
   if (!calendarId || !taskId) {
     throw new Error("The calendar id and task id are required");
@@ -27,7 +28,7 @@ export const createCalendarTask = async (
   try {
     return await db
       .insert(CalendarTaskTable)
-      .values({ calendarId, taskId })
+      .values({ calendarId, taskId, postDate })
       .returning();
   } catch (e) {
     throw new Error("Failed to create calendar task");

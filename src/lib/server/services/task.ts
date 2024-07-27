@@ -8,6 +8,7 @@ import { db } from "../db/db";
 import { CalendarTable, TaskTable } from "../db/schemas";
 import CalendarTaskTable from "../db/schemas/calendar-task";
 import { CalendarTask } from "../types";
+import { InsertResponse } from "../types/response";
 import { createCalendarTask, getUserCalendar } from "./calendar";
 
 type CreateTaskType = {
@@ -17,7 +18,9 @@ type CreateTaskType = {
   postDate: Date;
 };
 
-export const createTask = async (event: CreateTaskType) => {
+export const createTask = async (
+  event: CreateTaskType
+): Promise<InsertResponse> => {
   // instance the database
   // create the task
   const { userId } = auth();
@@ -50,7 +53,11 @@ export const createTask = async (event: CreateTaskType) => {
   }
 
   const taskId = response[0].id;
-  const calendarTasks = await createCalendarTask(userCalendar.id, taskId);
+  const calendarTasks = await createCalendarTask(
+    userCalendar.id,
+    taskId,
+    event.postDate
+  );
 
   if (!calendarTasks) {
     throw new Error("Failed to create calendar task");
@@ -78,7 +85,7 @@ export const getUserTasks = async (userId: string): Promise<CalendarTask[]> => {
         status: TaskTable.status,
         isActive: TaskTable.isActive,
         createdAt: TaskTable.createdAt,
-        updatedAt: TaskTable.updatedAt
+        updatedAt: TaskTable.updatedAt,
       })
       .from(CalendarTable)
       .innerJoin(
@@ -91,7 +98,6 @@ export const getUserTasks = async (userId: string): Promise<CalendarTask[]> => {
       return [];
     }
     return response;
-
   } catch (e) {
     throw new Error("Failed to get user tasks");
   }

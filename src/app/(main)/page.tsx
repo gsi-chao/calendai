@@ -9,6 +9,7 @@ export default async function Home() {
   }
 
   const tasks = await getUserTasks(userId);
+  console.log(tasks)
   return (
     <div className="h-full w-full overflow-y-auto">
       <CalendarContainer tasks={tasks} />

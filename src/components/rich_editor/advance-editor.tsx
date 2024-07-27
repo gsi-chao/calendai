@@ -1,12 +1,12 @@
 "use client";
 import {
-  EditorCommand,
-  EditorCommandEmpty,
-  EditorCommandItem,
-  EditorCommandList,
-  EditorContent,
-  EditorRoot,
-  type JSONContent
+    EditorCommand,
+    EditorCommandEmpty,
+    EditorCommandItem,
+    EditorCommandList,
+    EditorContent,
+    EditorRoot,
+    type JSONContent
 } from "novel";
 
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
@@ -17,7 +17,7 @@ import { LinkSelector } from "./selectors/link-selector";
 import { NodeSelector } from "./selectors/node-selector";
 
 import { Separator } from "@/components/ui/separator";
-import useDebounce from "@/hooks/useDebounce";
+import useDebounce from "@/core/hooks/useDebounce";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import GenerativeMenuSwitch from "./generative/generative-menu-switch";
 import { uploadFn } from "./image-upload";

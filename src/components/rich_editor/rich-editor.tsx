@@ -1,6 +1,6 @@
 "use client";
 
-import useDebounce from "@/hooks/useDebounce";
+import useDebounce from "@/core/hooks/useDebounce";
 import { EditorContent, EditorRoot, JSONContent } from "novel";
 import { useEffect, useState } from "react";
 

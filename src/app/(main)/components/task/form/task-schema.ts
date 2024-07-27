@@ -6,3 +6,5 @@ export const taskFormSchema = z.object({
     tags: z.string().optional(),
     postDate: z.date().default(() => new Date()),
 })
+
+export type TaskFormType = z.infer<typeof taskFormSchema>

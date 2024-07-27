@@ -12,21 +12,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
-import { z } from "zod";
-import PostDateField from "./fields/post-date";
-import { taskFormSchema } from "./task-schema";
+import PostDateField from "../fields/post-date";
+import TaskFormSubmitButton from "./task-form-submit-button";
+import { TaskFormType } from "./task-schema";
 
 type Props = {
-  onSubmitTask: (values: z.infer<typeof taskFormSchema>) => void;
+  onSubmitTask: (values: TaskFormType) => void;
+  isSubmitting: boolean;
 };
 
-const TaskForm: React.FC<Props> = ({ onSubmitTask }) => {
-  const form = useFormContext<z.infer<typeof taskFormSchema>>();
+const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
+  const form = useFormContext<TaskFormType>();
 
-  function onSubmit(values: z.infer<typeof taskFormSchema>) {
+  function onSubmit(values: TaskFormType) {
     onSubmitTask(values);
   }
-  
+
   return (
     <Form {...form}>
       <form
@@ -86,6 +87,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask }) => {
           name="postDate"
           label="Post Date"
         />
+        <TaskFormSubmitButton isSubmitting={isSubmitting} />
       </form>
     </Form>
   );
