@@ -34,13 +34,20 @@
   - [x] Crear formulario para agregar eventos
     - [x] Crear UI para la creacion de un evento
     - [x] Integrar Novel.sh para la creación de eventos(WSGI)
-    - [] Integrar Novel.sh con Vercel AI SDK
-    - [] Generar sugerencia de título con Verce AI SDK
-    - [] Generar sugerencia de tags con Verce AI SDK
+    - [x] Integrar Novel.sh con Vercel AI SDK
+    - [x] Generar sugerencia de título con Verce AI SDK
+    - [x] Generar sugerencia de tags con Verce AI SDK
     - [] Arreglar el bug cuando se copia el Markdown que no se formatea correctamente
   - [] Crear formulario para editar eventos
   - [] Eliminar eventos
+  - [] Marcar en el aside el link activo
 
   - [] UI Calendario
-    - [] Adicionar evento al hacer click en el calendario
+    - [x] Adicionar evento al hacer click en el calendario
     - [] Cuando se pare sobre el calendario, mostrar un elemento para agregar un evento(stale)
+- [] Integración con redes sociales
+  - [] Integrar LinkedIn
+    - [] Crear un endpoint para el callback de Autenticacion de LinkedIn
+      - [] Almacenar el token de acceso en la base de datos
+      - [] Crear entidad usuario integración
+    - [] Crear accion para conectar cuenta de LinkedIn

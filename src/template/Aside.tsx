@@ -1,7 +1,4 @@
-import {
-  CalendarCheck,
-  Home
-} from "lucide-react";
+import { CalendarCheck, Home, Share2 } from "lucide-react";
 
 import {
   Tooltip,
@@ -36,10 +33,21 @@ const Aside = () => {
           </TooltipTrigger>
           <TooltipContent side="right">Project List</TooltipContent>
         </Tooltip>
-        
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="/connections"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+            >
+              <Share2 className="h-5 w-5" />
+              <span className="sr-only">Connectionst</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">Connectionst</TooltipContent>
+        </Tooltip>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-        <ThemeSwitcher/>
+        <ThemeSwitcher />
         <AsideUser />
       </nav>
     </aside>
