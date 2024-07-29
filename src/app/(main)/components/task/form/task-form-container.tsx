@@ -39,7 +39,6 @@ const TaskFormContainer: React.FC<Props> = ({
       }
       setIsSubmitting(false);
     } catch (e) {
-      console.log(e);
       setIsSubmitting(false);
     }
   };

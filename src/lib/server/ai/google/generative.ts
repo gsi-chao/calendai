@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { z } from "zod";
 import { generateAIObjectPlain } from "./gemini";
@@ -13,7 +13,10 @@ export const generateTitleSuggestions = async (
       z.object({ data: z.array(z.string()) })
     );
     if (response.data) {
-      return response.data;
+      // remove " " from the beginning of the string and straing characters like \n \t \r \ etc using regex
+      return response.data.map((title: string) => {
+        return title.replace(/^\s+/, "").replace(/[\n\t\r\\\"]/g, "");
+      });
     }
     return [];
   } catch (e) {

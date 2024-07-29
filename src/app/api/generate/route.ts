@@ -4,7 +4,6 @@ import { generateAIStreamText } from "@/lib/server/ai/google/gemini";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  console.log(req)
   const { prompt }: { prompt: string } = await req.json();
 
   const result = await generateAIStreamText(prompt);

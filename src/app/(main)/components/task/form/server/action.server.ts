@@ -8,7 +8,6 @@ import { taskFormSchema, TaskFormType } from "../task-schema";
 export const createTaskSubmitAction = async (
   values: TaskFormType
 ): Promise<ActionResponse<InsertResponse | null>> => {
-  console.log("enter here");
   try {
     const parsed = taskFormSchema.safeParse(values);
     if (!parsed.success) {
