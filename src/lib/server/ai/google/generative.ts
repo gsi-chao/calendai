@@ -28,7 +28,7 @@ export const generateTagsSuggestions = async (
   try {
     const response = await generateAIObjectPlain(
       `You are a professional writer who crafts engaging posts for social platforms like LinkedIn, Facebook, and other media.`,
-      `Generate 10 tags in camel case for a post based on the following content: \n\n ${content} \n Only return the result items.`,
+      `Generate 10 tags in snake_case for a post based on the following content: \n\n ${content} \n Only return the result items.`,
       z.object({ data: z.array(z.string()) })
     );
     if (response.data) {

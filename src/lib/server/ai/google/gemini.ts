@@ -1,7 +1,7 @@
 "use server";
 
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { CoreMessage, generateObject, generateText } from "ai";
+import { CoreMessage, generateObject, generateText, streamText } from "ai";
 import { z, ZodSchema } from "zod";
 
 const google = createGoogleGenerativeAI({
@@ -41,4 +41,14 @@ const generateAIObjectPlain = async (
   return object;
 };
 
-export { generateAIObject, generateAIObjectPlain, generateAIText };
+const generateAIStreamText = async (prompt: string) => {
+  const result = await streamText({
+    model: google("models/gemini-1.5-flash"),
+    prompt,
+  });
+
+  return result;
+};
+
+export { generateAIObject, generateAIObjectPlain, generateAIStreamText, generateAIText };
+

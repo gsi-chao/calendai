@@ -1,10 +1,12 @@
+'use client';
+
 import { CommandGroup, CommandItem, CommandSeparator } from "@/components/ui/command";
 import {
-    ArrowDownWideNarrow,
-    CheckCheck,
-    RefreshCcwDot,
-    StepForward,
-    WrapText,
+  ArrowDownWideNarrow,
+  CheckCheck,
+  RefreshCcwDot,
+  StepForward,
+  WrapText,
 } from "lucide-react";
 import { useEditor } from "novel";
 import { getPrevText } from "novel/utils";
