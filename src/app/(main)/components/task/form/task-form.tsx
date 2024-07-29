@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
+import AiSuggestionAddon from "../fields/ai-suggestion-addon";
 import PostDateField from "../fields/post-date";
 import TaskFormSubmitButton from "./task-form-submit-button";
 import { TaskFormType } from "./task-schema";
@@ -23,6 +24,8 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
   const form = useFormContext<TaskFormType>();
+  const content = form.watch("content");
+  console.log(content)
 
   function onSubmit(values: TaskFormType) {
     onSubmitTask(values);
@@ -42,7 +45,17 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Some Title Here" {...field} />
+                <div className="relative">
+                  <Input placeholder="Some Title Here" {...field} />
+                  <AiSuggestionAddon
+                    className="absolute right-2 top-1"
+                    enabled={content.length > 150}
+                    content={content}
+                    onSelectSuggestion={(suggestion) => {
+                      form.setValue("title", suggestion);
+                    }}
+                  />
+                </div>
               </FormControl>
               <FormDescription>Enter the title of the task.</FormDescription>
               <FormMessage />
