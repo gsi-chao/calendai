@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
-import AiSuggestionAddon from "../fields/ai-suggestion-addon";
+import AiTagsSuggestionAddon from "../fields/ai-tags-suggestion-addon";
+import AiTitleSuggestionAddon from "../fields/ai-title-suggestion-addon";
 import PostDateField from "../fields/post-date";
 import TaskFormSubmitButton from "./task-form-submit-button";
 import { TaskFormType } from "./task-schema";
@@ -24,12 +25,17 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
   const form = useFormContext<TaskFormType>();
-  const content = form.watch("content");
-  console.log(content)
+  const [content, tags] = form.watch(["content", "tags"]);
 
   function onSubmit(values: TaskFormType) {
     onSubmitTask(values);
   }
+
+  const addTagsSuggetions = async (suggestion: string) => {
+    const tags = form.getValues("tags");
+    const newTags = tags ? `${tags},${suggestion}` : suggestion;
+    form.setValue("tags", newTags.toLowerCase());
+  };
 
   return (
     <Form {...form}>
@@ -47,7 +53,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
               <FormControl>
                 <div className="relative">
                   <Input placeholder="Some Title Here" {...field} />
-                  <AiSuggestionAddon
+                  <AiTitleSuggestionAddon
                     className="absolute right-2 top-1"
                     enabled={content.length > 150}
                     content={content}
@@ -86,7 +92,16 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
             <FormItem>
               <FormLabel>Tags</FormLabel>
               <FormControl>
-                <Input placeholder="tags" {...field} />
+                <div className="relative">
+                  <Input placeholder="tags" {...field} />
+                  <AiTagsSuggestionAddon
+                    className="absolute right-2 top-1"
+                    enabled={content.length > 150}
+                    content={content}
+                    onSelectSuggestion={addTagsSuggetions}
+                    selectedTags={tags?.split(",") ?? []}
+                  />
+                </div>
               </FormControl>
               <FormDescription>
                 Enter the tags separated by coma.
