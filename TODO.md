@@ -47,7 +47,14 @@
     - [] Cuando se pare sobre el calendario, mostrar un elemento para agregar un evento(stale)
 - [] Integración con redes sociales
   - [] Integrar LinkedIn
-    - [] Crear un endpoint para el callback de Autenticacion de LinkedIn
-      - [] Almacenar el token de acceso en la base de datos
-      - [] Crear entidad usuario integración
-    - [] Crear accion para conectar cuenta de LinkedIn
+    - [x] Crear un endpoint para el callback de Autenticacion de LinkedIn
+      - [x] Almacenar el token de acceso en la base de datos
+      - [x] Crear entidad usuario integración
+      - [x] Actualizar diseño del card de Linkedin
+      - [x] Mostrar integraciones disponibles para el usuario
+    - [x] Crear accion para conectar cuenta de LinkedIn
+- [] Programación de publicaciones
+  - [] Crear tarea programada para publicacion
+  - [] Crear accion para publicar en redes sociales
+    - [] Crear accion para publicar en LinkedIn
+  - [] Adicionar a la tarea la accion de seleccionar la red social  

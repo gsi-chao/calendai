@@ -1,35 +1,28 @@
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from "@/components/ui/card";
 import { LinkedinProfileType } from "@/lib/server/integrations/linkedin/type";
+import { Unplug } from "lucide-react";
 import Image from "next/image";
 
-const LinkedinProfile = ({ profile }: { profile: LinkedinProfileType}) => {
+const LinkedinProfile = ({ profile }: { profile: LinkedinProfileType }) => {
   return (
-    <Card className="w-max">
-      <CardHeader>
-        <CardTitle>LinkedIn Profile</CardTitle>
-      </CardHeader>
-      <CardContent className="gap-4 flex justify-center items-start flex-col">
-        <Image
-        className="rounded-full"
-          src={profile.picture}
-          width={150}
-          height={150}
-          alt={profile.name}
-        />
-        <p className="text-xl text-gray-700 font-medium">{profile.name}</p>
-        <p >{profile.email}</p>
-      </CardContent>
-      <CardFooter>
-        <Button>Disconnect</Button>
-      </CardFooter>
-    </Card>
+    <div className="flex gap-x-4 w-auto h-44  rounded-md border bg-card text-card-foreground shadow-sm">
+      <Image
+        className="h-full w-auto rounded-l-md"
+        src={profile.picture}
+        width={150}
+        height={150}
+        alt={profile.name}
+      />
+
+      <div className="flex flex-col justify-between p-4">
+        <h4 className="text-xl font-medium">LinkedIn Profile</h4>
+        <span className="text-lg">{profile.name}</span>
+        <span className="text-base">{profile.email}</span>
+        <Button>
+          Disconnect <Unplug className="w-6 h-6 pl-2" />
+        </Button>
+      </div>
+    </div>
   );
 };
 
