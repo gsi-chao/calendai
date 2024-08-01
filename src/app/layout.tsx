@@ -1,10 +1,10 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
-import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const monstserrat = Montserrat({ subsets: ["latin"] });

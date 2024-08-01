@@ -1,6 +1,6 @@
 import { getUserTasks } from "@/lib/server/services/task";
+import CalendarContainer from "@/modules/calendar/containers/calendar";
 import { auth } from "@clerk/nextjs/server";
-import CalendarContainer from "./containers/calendar";
 
 export default async function Home() {
   const { userId } = auth();

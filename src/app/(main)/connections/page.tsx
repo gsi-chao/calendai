@@ -1,7 +1,7 @@
 import { getUserIntegration } from "@/lib/server/services/social_integration";
+import ConnectionContainer from "@/modules/connections/container/connection_containet";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import ConnectionContainer from "./container/connection_containet";
 
 export default async function ConnectionPage() {
   const { userId } = auth();

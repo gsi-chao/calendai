@@ -46,30 +46,6 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
       >
         <FormField
           control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input placeholder="Some Title Here" {...field} />
-                  <AiTitleSuggestionAddon
-                    className="absolute right-2 top-1"
-                    enabled={content.length > 150}
-                    content={content}
-                    onSelectSuggestion={(suggestion) => {
-                      form.setValue("title", suggestion);
-                    }}
-                  />
-                </div>
-              </FormControl>
-              <FormDescription>Enter the title of the task.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="content"
           render={({ field }) => (
             <FormItem>
@@ -87,6 +63,33 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
         />
         <FormField
           control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    placeholder="Write your title or use the AI generation tool"
+                    {...field}
+                  />
+                  <AiTitleSuggestionAddon
+                    className="absolute right-2 top-1"
+                    enabled={content.length > 100}
+                    content={content}
+                    onSelectSuggestion={(suggestion) => {
+                      form.setValue("title", suggestion);
+                    }}
+                  />
+                </div>
+              </FormControl>
+              <FormDescription>Enter the title of the task.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="tags"
           render={({ field }) => (
             <FormItem>
@@ -96,7 +99,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
                   <Input placeholder="tags" {...field} />
                   <AiTagsSuggestionAddon
                     className="absolute right-2 top-1"
-                    enabled={content.length > 150}
+                    enabled={content.length > 100}
                     content={content}
                     onSelectSuggestion={addTagsSuggetions}
                     selectedTags={tags?.split(",") ?? []}
@@ -106,6 +109,21 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
               <FormDescription>
                 Enter the tags separated by coma.
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="coverImage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cover Image</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input placeholder="https://image.com" {...field} />
+                </div>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

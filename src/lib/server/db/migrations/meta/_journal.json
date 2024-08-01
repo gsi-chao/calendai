@@ -50,6 +50,13 @@
       "when": 1722281852665,
       "tag": "0006_ambitious_nemesis",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1722541491137,
+      "tag": "0007_giant_tyger_tiger",
+      "breakpoints": true
     }
   ]
 }

@@ -6,12 +6,22 @@ import { db } from "../db/db";
 import { CalendarTable } from "../db/schemas";
 import CalendarTaskTable from "../db/schemas/calendar-task";
 
-export const createCalendar = async (userId: string) => {
+export const createCalendar = async (
+  userId: string
+): Promise<{ id: number }> => {
   if (!userId) {
     throw new Error("The user id is required");
   }
   try {
-    return await db.insert(CalendarTable).values({ userId }).returning();
+    const response = await db
+      .insert(CalendarTable)
+      .values({ userId })
+      .returning({ id: CalendarTable.id });
+
+    if (response.length === 0) {
+      throw new Error("Failed to create calendar");
+    }
+    return response[0];
   } catch (e) {
     throw new Error("Failed to create calendar");
   }
@@ -45,7 +55,7 @@ export const getUserCalendar = async (userId: string) => {
       .from(CalendarTable)
       .where(eq(CalendarTable.userId, userId))
       .limit(1);
-    if (!response) {
+    if (response.length === 0) {
       throw new Error("Calendar not found");
     }
     return response[0];
@@ -68,3 +78,23 @@ export const getCalendarTasks = async (calendarId: number) => {
   }
 };
 
+export const getUserCalendarOrCreate = async (
+  userId: string
+): Promise<{ id: number }> => {
+  if (!userId) {
+    throw new Error("The user id is required");
+  }
+  try {
+    const response = await db
+      .select()
+      .from(CalendarTable)
+      .where(eq(CalendarTable.userId, userId))
+      .limit(1);
+    if (response.length === 0) {
+      return await createCalendar(userId);
+    }
+    return response[0];
+  } catch (e) {
+    throw new Error("Failed to get calendar");
+  }
+};

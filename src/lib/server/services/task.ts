@@ -9,13 +9,15 @@ import { CalendarTable, TaskTable } from "../db/schemas";
 import CalendarTaskTable from "../db/schemas/calendar-task";
 import { CalendarTask } from "../types";
 import { InsertResponse } from "../types/response";
-import { createCalendarTask, getUserCalendar } from "./calendar";
+import { createCalendarTask, getUserCalendarOrCreate } from "./calendar";
 
-type CreateTaskType = {
+export type CreateTaskType = {
   title: string;
   content: string;
+  plainContent?: string;
   tags?: string;
   postDate: Date;
+  coverImage: string
 };
 
 export const createTask = async (
@@ -30,7 +32,7 @@ export const createTask = async (
   }
 
   // get the user calendar
-  const userCalendar = await getUserCalendar(userId);
+  const userCalendar = await getUserCalendarOrCreate(userId);
   if (!userCalendar) {
     throw new Error("Calendar not found");
   }
@@ -41,14 +43,15 @@ export const createTask = async (
       title: event.title,
       createdBy: userId,
       content: event.content,
+      plainContent: event.plainContent ?? "",
       tags: event.tags,
-      coverImage: "https://via.placeholder.com/150",
+      coverImage: event.coverImage,
       thumbnail: "https://via.placeholder.com/150",
     })
     .returning({
       id: TaskTable.id,
     });
-  if (!response) {
+  if (response.length === 0) {
     throw new Error("Failed to create task");
   }
 
@@ -78,6 +81,7 @@ export const getUserTasks = async (userId: string): Promise<CalendarTask[]> => {
         createdBy: TaskTable.createdBy,
         title: TaskTable.title,
         content: TaskTable.content,
+        plainContent: TaskTable.plainContent,
         tags: TaskTable.tags,
         coverImage: TaskTable.coverImage,
         thumbnail: TaskTable.thumbnail,
@@ -99,6 +103,7 @@ export const getUserTasks = async (userId: string): Promise<CalendarTask[]> => {
     }
     return response;
   } catch (e) {
+    console.log(e)
     throw new Error("Failed to get user tasks");
   }
 };

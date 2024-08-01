@@ -1,12 +1,12 @@
 "use client";
 import {
-    EditorCommand,
-    EditorCommandEmpty,
-    EditorCommandItem,
-    EditorCommandList,
-    EditorContent,
-    EditorRoot,
-    type JSONContent
+  EditorCommand,
+  EditorCommandEmpty,
+  EditorCommandItem,
+  EditorCommandList,
+  EditorContent,
+  EditorRoot,
+  type JSONContent,
 } from "novel";
 
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
@@ -23,6 +23,7 @@ import GenerativeMenuSwitch from "./generative/generative-menu-switch";
 import { uploadFn } from "./image-upload";
 import { TextButtons } from "./selectors/text-buttons";
 import { slashCommand, suggestionItems } from "./slash-command";
+import { generateHtmlFromJson, generateJsonFromHtml } from "./util";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -45,7 +46,7 @@ const AdvanceEditor = ({ initialValue, onChange }: EditorProp) => {
   useEffect(() => {
     try {
       if (initialValue) {
-        setContent(JSON.parse(initialValue));
+        setContent(generateJsonFromHtml(initialValue));
       }
     } catch (e) {
       setContent({ type: "doc", content: [] });
@@ -54,7 +55,7 @@ const AdvanceEditor = ({ initialValue, onChange }: EditorProp) => {
 
   useEffect(() => {
     if (debound) {
-      onChange(JSON.stringify(debound));
+      onChange(generateHtmlFromJson(debound));
     }
   }, [debound, onChange]);
 

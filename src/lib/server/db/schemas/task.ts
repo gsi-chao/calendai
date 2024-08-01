@@ -1,10 +1,10 @@
 import {
-    boolean,
-    pgTable,
-    serial,
-    text,
-    timestamp,
-    varchar,
+  boolean,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 const TaskTable = pgTable("task", {
@@ -12,6 +12,7 @@ const TaskTable = pgTable("task", {
   createdBy: text("created_by").notNull(),
   title: varchar("title", { length: 255 }).notNull(),
   content: text("description").notNull(),
+  plainContent: text("plain_content"),
   coverImage: text("cover_image").notNull(),
   thumbnail: text("thumbnail").notNull(),
   tags: text("tags"),

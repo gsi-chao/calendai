@@ -39,8 +39,11 @@
     - [x] Generar sugerencia de tags con Verce AI SDK
     - [] Arreglar el bug cuando se copia el Markdown que no se formatea correctamente
   - [] Crear formulario para editar eventos
+  - [] Visualizar eventos
+  - [] Asignar redes sociales a las que publicar
   - [] Eliminar eventos
   - [] Marcar en el aside el link activo
+  - [] Crear toolbar para el calendario. Incluir el uso de la api de novel.sh
 
   - [] UI Calendario
     - [x] Adicionar evento al hacer click en el calendario
@@ -54,7 +57,17 @@
       - [x] Mostrar integraciones disponibles para el usuario
     - [x] Crear accion para conectar cuenta de LinkedIn
 - [] Programación de publicaciones
+  - [] Convertir tictac json en un Texto compatible con linkedin, facebook etc.
   - [] Crear tarea programada para publicacion
   - [] Crear accion para publicar en redes sociales
     - [] Crear accion para publicar en LinkedIn
   - [] Adicionar a la tarea la accion de seleccionar la red social  
+- [] Integrar llama 3.1 como modelo LLM
+- [] Integrar OpenAI como modelo LLM
+
+## Know Issues
+
+- [x] Crear calendario si al crear la tarea el usuario no tiene un calendario
+- [] Revisar carga inicial de la app
+- [] Clerk Aside UserButton Hydration Error
+- [] La pantalla tiene un blur cuando se carga el command dentro del AI Suggestion WSGI
