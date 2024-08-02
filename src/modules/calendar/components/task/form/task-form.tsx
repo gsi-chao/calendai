@@ -25,8 +25,7 @@ type Props = {
 
 const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
   const form = useFormContext<TaskFormType>();
-  const [content, tags] = form.watch(["content", "tags"]);
-
+  const [content, tags, postDate] = form.watch(["content", "tags", "postDate"]);
   function onSubmit(values: TaskFormType) {
     onSubmitTask(values);
   }

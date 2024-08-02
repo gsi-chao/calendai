@@ -8,7 +8,6 @@ import { db } from "../db/db";
 import { CalendarTable, TaskTable } from "../db/schemas";
 import CalendarTaskTable from "../db/schemas/calendar-task";
 import { CalendarTask } from "../types";
-import { InsertResponse } from "../types/response";
 import { createCalendarTask, getUserCalendarOrCreate } from "./calendar";
 
 export type CreateTaskType = {
@@ -20,9 +19,16 @@ export type CreateTaskType = {
   coverImage: string
 };
 
+export type InserTaskResponse = {
+  id: number;
+  createdBy: string;
+  plainContent: string | null;
+  content: string;
+}
+
 export const createTask = async (
   event: CreateTaskType
-): Promise<InsertResponse> => {
+): Promise<InserTaskResponse> => {
   // instance the database
   // create the task
   const { userId } = auth();
@@ -50,6 +56,9 @@ export const createTask = async (
     })
     .returning({
       id: TaskTable.id,
+      createdBy: TaskTable.createdBy,
+      plainContent: TaskTable.plainContent,
+      content: TaskTable.content,
     });
   if (response.length === 0) {
     throw new Error("Failed to create task");

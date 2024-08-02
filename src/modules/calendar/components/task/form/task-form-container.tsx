@@ -1,6 +1,6 @@
 import {
   generateJsonFromHtml,
-  generateTextFromJson
+  generateTextFromJson,
 } from "@/components/rich_editor/util";
 import { CalendarTask } from "@/lib/server/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +29,7 @@ const TaskFormContainer: React.FC<Props> = ({
       content: task?.content ?? "",
       plainContent: task?.plainContent ?? "",
       tags: task?.tags ?? "",
-      postDate: task ? task.postDate : defaultDate ?? new Date(),
+      postDate: task ? task.postDate : defaultDate ?? new Date()
     },
     resolver: zodResolver(taskFormSchema),
     mode: "onSubmit",

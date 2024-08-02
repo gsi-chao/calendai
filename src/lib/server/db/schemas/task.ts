@@ -16,8 +16,8 @@ const TaskTable = pgTable("task", {
   coverImage: text("cover_image").notNull(),
   thumbnail: text("thumbnail").notNull(),
   tags: text("tags"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
+  createdAt: timestamp("created_at",{withTimezone: false}).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", {withTimezone: false})
     .defaultNow()
     .notNull()
     .$onUpdate(() => {
