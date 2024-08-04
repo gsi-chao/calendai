@@ -1,11 +1,18 @@
 import {
   boolean,
+  pgEnum,
   pgTable,
   serial,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+
+export type StatusProvider = "pending" | "published";
+export const statusEnum = pgEnum("status", [
+  "pending",
+  "published"
+]);
 
 const TaskTable = pgTable("task", {
   id: serial("id").primaryKey(),
@@ -23,7 +30,7 @@ const TaskTable = pgTable("task", {
     .$onUpdate(() => {
       return new Date();
     }),
-  status: varchar("status", { length: 50 }).default("pending").notNull(),
+  status: statusEnum("status").default("pending").notNull(),
   isActive: boolean("is_active").default(false).notNull(),
 });
 

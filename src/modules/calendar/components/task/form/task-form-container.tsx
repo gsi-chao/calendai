@@ -45,6 +45,9 @@ const TaskFormContainer: React.FC<Props> = ({
         toast.success("Task created successfully");
         onSuccess();
       }
+      else{
+        toast.error(response.message);
+      }
       setIsSubmitting(false);
     } catch (e) {
       setIsSubmitting(false);

@@ -2,8 +2,12 @@
 
 import { ActionResponse } from "@/core/types/response";
 import { inngest } from "@/lib/server/inngest/client";
-import { createTask } from "@/lib/server/services/task";
+import {
+  createTask,
+  getCountUserUnPublishedPost,
+} from "@/lib/server/services/task";
 import { InsertResponse } from "@/lib/server/types/response";
+import { addHours, isAfter } from "date-fns";
 import { taskFormSchema, TaskFormType } from "../task-schema";
 
 export const createTaskSubmitAction = async (
@@ -15,17 +19,28 @@ export const createTaskSubmitAction = async (
       return { success: false, message: "Invalid values", data: null };
     }
 
+    const count = await getCountUserUnPublishedPost();
+    if (count > Number(process.env.NEXT_PUBLIC_MAX_ACTIVE_POST ?? 5)) {
+      return {
+        success: false,
+        message: "You have reached the maximum number of active posts",
+        data: null,
+      };
+    }
     const response = await createTask(parsed.data);
 
     // Send the task to the inngest function
-    await inngest.send({
-      name: "calendai/publish.now",
-      data: {
-        postDate: parsed.data.postDate,
-        content: response.plainContent,
-        userId: response.createdBy,
-      },
-    });
+    if (isAfter(addHours(new Date(), 3), parsed.data.postDate)) {
+      await inngest.send({
+        name: "calendai/publish.now",
+        data: {
+          postDate: parsed.data.postDate,
+          content: response.plainContent,
+          userId: response.createdBy,
+          taskId: response.id,
+        },
+      });
+    }
 
     return {
       success: true,

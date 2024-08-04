@@ -1,8 +1,8 @@
 "use server";
 
 import {
-    deleteUserIntegration,
-    getUserIntegrationByType
+  deleteUserIntegration,
+  getUserIntegrationByType
 } from "../../services/social_integration";
 import { getLinkedInProfile } from "./profile";
 

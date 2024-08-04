@@ -2,11 +2,12 @@
 
 import { auth } from "@clerk/nextjs/server";
 
-import { eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "../db/db";
 import { CalendarTable, TaskTable } from "../db/schemas";
 import CalendarTaskTable from "../db/schemas/calendar-task";
+import { StatusProvider } from "../db/schemas/task";
 import { CalendarTask } from "../types";
 import { createCalendarTask, getUserCalendarOrCreate } from "./calendar";
 
@@ -116,3 +117,36 @@ export const getUserTasks = async (userId: string): Promise<CalendarTask[]> => {
     throw new Error("Failed to get user tasks");
   }
 };
+
+export const getCountUserUnPublishedPost = async (): Promise<number> => {
+  const {userId} = auth();
+  if (!userId) {
+    throw new Error("The user id is required");
+  }
+  try{
+    const taskCount = await db.select({ count: count() }).from(TaskTable).where(and(eq(TaskTable.createdBy, userId), eq(TaskTable.status, "published")));
+    return taskCount[0].count;
+  }
+  catch(e){
+    console.log(e)
+    throw new Error("Failed to get user unpublished tasks");
+  }
+}
+
+export const updateTaskStatus = async (taskId: number, status: StatusProvider): Promise<{id: number}> => {
+  if(!taskId){
+    throw new Error("The task id is required");
+  }
+  try{
+    const response = await db.update(TaskTable).set({status}).where(eq(TaskTable.id, taskId)).returning({
+      id: TaskTable.id});
+    if(response.length === 0){
+      throw new Error("Failed to update task status");
+    }
+    return response[0];
+  }
+  catch(e){
+    console.log(e)
+    throw new Error("Failed to update task status");
+  }
+}
