@@ -28,8 +28,9 @@ const TaskFormContainer: React.FC<Props> = ({
       title: task?.title ?? "",
       content: task?.content ?? "",
       plainContent: task?.plainContent ?? "",
+      coverImage: task?.coverImage ?? "",
       tags: task?.tags ?? "",
-      postDate: task ? task.postDate : defaultDate ?? new Date()
+      postDate: task ? task.postDate : defaultDate ?? new Date(),
     },
     resolver: zodResolver(taskFormSchema),
     mode: "onSubmit",
@@ -44,8 +45,7 @@ const TaskFormContainer: React.FC<Props> = ({
       if (response.success) {
         toast.success("Task created successfully");
         onSuccess();
-      }
-      else{
+      } else {
         toast.error(response.message);
       }
       setIsSubmitting(false);
@@ -56,7 +56,11 @@ const TaskFormContainer: React.FC<Props> = ({
 
   return (
     <FormProvider {...form}>
-      <TaskForm onSubmitTask={onSubmitTask} isSubmitting={isSubmitting} />
+      <TaskForm
+        onSubmitTask={onSubmitTask}
+        isSubmitting={isSubmitting}
+        mode={task?.id ? "preview" : "create"}
+      />
     </FormProvider>
   );
 };

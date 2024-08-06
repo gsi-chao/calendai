@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarOptions } from "@fullcalendar/core";
+import { CalendarOptions, EventClickArg } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
@@ -8,7 +8,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 
 type Props = {
   events: Event[];
-  onEventClick?: (event: DateClickArg) => void;
+  onDateClick?: (event: DateClickArg) => void;
+  onEventClick?: (event: EventClickArg) => void;
   calendarRef?: React.RefObject<FullCalendar>;
 } & CalendarOptions;
 
@@ -16,20 +17,25 @@ export type Event = {
   title: string;
   start: Date;
   end: Date;
+  id: number;
 };
 
 export default function Calendar({
   height,
   events,
+  onDateClick,
   onEventClick,
   customButtons,
   calendarRef,
   ...props
 }: Props) {
   const handleDateClick = (arg: DateClickArg) => {
-    onEventClick?.(arg);
+    onDateClick?.(arg);
   };
 
+  const handleEventClick = (arg: EventClickArg) => {
+    onEventClick?.(arg);
+  };
 
   return (
     <FullCalendar
@@ -41,7 +47,7 @@ export default function Calendar({
       initialView="timeGridWeek"
       nowIndicator
       selectable
-      editable
+      editable={false}
       selectMirror
       events={events}
       scrollTime={new Date().getHours() + ":00:00"}
@@ -49,6 +55,7 @@ export default function Calendar({
       slotLabelInterval={{ hours: 1 }}
       contentHeight={200}
       dateClick={handleDateClick}
+      eventClick={handleEventClick}
       views={{
         timeGridWeek: {
           type: "timeGridWeek",
@@ -66,7 +73,7 @@ export default function Calendar({
         left: "prev,next",
         center: "title",
         right: `timeGridWeek,dayGridMonth${
-          customButtons && `,${Object.keys(customButtons).join(",")}`
+          customButtons && ` ${Object.keys(customButtons).join(",")}`
         }`,
       }}
     />

@@ -57,10 +57,11 @@
       - [x] Mostrar integraciones disponibles para el usuario
     - [x] Crear accion para conectar cuenta de LinkedIn
 - [] Programación de publicaciones
-  - [] Convertir tictac json en un Texto compatible con linkedin, facebook etc.
+  - [x] Convertir tictac json en un Texto compatible con linkedin, facebook etc.
   - [] Crear tarea programada para publicacion
+  - [] Crear cron automatico para publicar tareas con menos de 2 horas de diferencia
   - [] Crear accion para publicar en redes sociales
-    - [] Crear accion para publicar en LinkedIn
+    - [x] Crear accion para publicar en LinkedIn
   - [] Adicionar a la tarea la accion de seleccionar la red social  
 - [] Integrar llama 3.1 como modelo LLM
 - [] Integrar OpenAI como modelo LLM

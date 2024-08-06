@@ -6,4 +6,5 @@ export const mapTasksToEvents = (calendarTasks: CalendarTask[]) =>
     title: calendarTask.title,
     start: new Date(calendarTask.postDate),
     end: addHours(calendarTask.postDate, 1),
+    id: calendarTask.id
   }));

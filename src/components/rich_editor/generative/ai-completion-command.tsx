@@ -1,4 +1,8 @@
-import { CommandGroup, CommandItem, CommandSeparator } from "@/components/ui/command";
+import {
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+} from "@/components/ui/command";
 import { Check, TextQuote, TrashIcon } from "lucide-react";
 import { useEditor } from "novel";
 
@@ -11,8 +15,8 @@ const AICompletionCommands = ({
 }) => {
   const { editor } = useEditor();
 
-  if(!editor) return null;
-  
+  if (!editor) return null;
+
   return (
     <>
       <CommandGroup>
@@ -30,7 +34,7 @@ const AICompletionCommands = ({
                   from: selection.from,
                   to: selection.to,
                 },
-                completion,
+                completion
               )
               .run();
           }}

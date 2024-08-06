@@ -150,3 +150,42 @@ export const updateTaskStatus = async (taskId: number, status: StatusProvider): 
     throw new Error("Failed to update task status");
   }
 }
+
+export const getTaskById = async (taskId: number): Promise<CalendarTask> => {
+  if(!taskId){
+    throw new Error("The task id is required");
+  }
+  try{
+    const response = await db.select({
+      id: TaskTable.id,
+      createdBy: TaskTable.createdBy,
+      title: TaskTable.title,
+      content: TaskTable.content,
+      plainContent: TaskTable.plainContent,
+      tags: TaskTable.tags,
+      coverImage: TaskTable.coverImage,
+      thumbnail: TaskTable.thumbnail,
+      postDate: CalendarTaskTable.postDate,
+      status: TaskTable.status,
+      isActive: TaskTable.isActive,
+      createdAt: TaskTable.createdAt,
+      updatedAt: TaskTable.updatedAt,
+    })
+    .from(CalendarTable)
+    .innerJoin(
+      CalendarTaskTable,
+      eq(CalendarTable.id, CalendarTaskTable.calendarId)
+    )
+    .innerJoin(TaskTable, eq(CalendarTaskTable.taskId, TaskTable.id))
+    .where(eq(TaskTable.id, taskId));
+    if(!response){
+      throw new Error("Task not found");
+    }
+    return response[0];
+  }
+  catch(e){
+    console.log(e)
+    throw new Error("Failed to get task by id");
+  }
+
+}

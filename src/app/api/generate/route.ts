@@ -1,4 +1,4 @@
-import { generateAIStreamText } from "@/lib/server/ai/google/gemini";
+import { generateAIStreamText } from "@/lib/server/ai/google";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

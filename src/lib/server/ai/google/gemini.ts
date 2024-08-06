@@ -26,6 +26,7 @@ const generateAIObject = async (messages: CoreMessage[]) => {
   });
   return object;
 };
+
 const generateAIObjectPlain = async (
   system: string,
   prompt: string,

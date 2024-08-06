@@ -21,11 +21,12 @@ import { TaskFormType } from "./task-schema";
 type Props = {
   onSubmitTask: (values: TaskFormType) => void;
   isSubmitting: boolean;
+  mode: "create" | "preview" | "edit";
 };
 
-const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
+const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
   const form = useFormContext<TaskFormType>();
-  const [content, tags, postDate] = form.watch(["content", "tags", "postDate"]);
+  const [content, tags] = form.watch(["content", "tags"]);
   function onSubmit(values: TaskFormType) {
     onSubmitTask(values);
   }
@@ -44,6 +45,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
         id="task-form"
       >
         <FormField
+          disabled={mode === "preview"}
           control={form.control}
           name="content"
           render={({ field }) => (
@@ -62,6 +64,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
         />
         <FormField
           control={form.control}
+          disabled={mode === "preview"}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -74,7 +77,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
                   />
                   <AiTitleSuggestionAddon
                     className="absolute right-2 top-1"
-                    enabled={content.length > 100}
+                    enabled={content?.length > 100}
                     content={content}
                     onSelectSuggestion={(suggestion) => {
                       form.setValue("title", suggestion);
@@ -88,6 +91,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
           )}
         />
         <FormField
+          disabled={mode === "preview"}
           control={form.control}
           name="tags"
           render={({ field }) => (
@@ -98,7 +102,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
                   <Input placeholder="tags" {...field} />
                   <AiTagsSuggestionAddon
                     className="absolute right-2 top-1"
-                    enabled={content.length > 100}
+                    enabled={content?.length > 100}
                     content={content}
                     onSelectSuggestion={addTagsSuggetions}
                     selectedTags={tags?.split(",") ?? []}
@@ -113,6 +117,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
           )}
         />
         <FormField
+          disabled={mode === "preview"}
           control={form.control}
           name="coverImage"
           render={({ field }) => (
@@ -132,7 +137,10 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting }) => {
           name="postDate"
           label="Post Date"
         />
-        <TaskFormSubmitButton isSubmitting={isSubmitting} />
+        <TaskFormSubmitButton
+          isSubmitting={isSubmitting}
+          isEditing={mode === "preview"}
+        />
       </form>
     </Form>
   );

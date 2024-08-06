@@ -37,10 +37,11 @@ const AdvanceEditor = ({ initialValue, onChange }: EditorProp) => {
   const [openLink, setOpenLink] = useState(false);
   const [openAI, setOpenAI] = useState(false);
 
-  const [content, setContent] = useState<JSONContent>({
-    type: "doc",
-    content: [],
-  });
+  const [content, setContent] = useState<JSONContent>(
+    initialValue
+      ? generateJsonFromHtml(initialValue)
+      : { type: "doc", content: [] }
+  );
   const debound = useDebounce(content, 1000);
 
   useEffect(() => {
