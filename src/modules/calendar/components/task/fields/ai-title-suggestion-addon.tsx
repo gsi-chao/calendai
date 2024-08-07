@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Magic } from "@/components/ui/icons";
 import { Popover, PopoverContent } from "@/components/ui/popover";
-import { generateTitleSuggestions } from "@/lib/server/ai/google/generative";
+import { generateTitleTextSuggestions } from "@/lib/server/ai/google/generative";
 import { cn } from "@/lib/utils";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { useState } from "react";
@@ -25,7 +25,7 @@ const AiTitleSuggestionAddon: React.FC<Props> = ({
 
   const generateSuggestions = async () => {
     setLoading(true);
-    const response = await generateTitleSuggestions(content);
+    const response = await generateTitleTextSuggestions(content);
     if (response && response.length > 0) {
       setSuggestions(response);
     }

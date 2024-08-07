@@ -1,7 +1,7 @@
 "use server";
 
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { CoreMessage, generateObject, generateText, streamText } from "ai";
+import { CoreMessage, CoreTool, generateObject, generateText, streamText } from "ai";
 import { z, ZodSchema } from "zod";
 
 const google = createGoogleGenerativeAI({
@@ -13,6 +13,17 @@ const generateAIText = async (messages: CoreMessage[]) => {
     model: google("models/gemini-1.5-flash"),
     messages,
     temperature: 0.5,
+  });
+  return text;
+};
+
+const generateAIPlainText = async (system: string, prompt: string, tools?: Record<string, CoreTool>) => {
+  const { text } = await generateText({
+    model: google("models/gemini-1.5-flash"),
+    system,
+    prompt,
+    temperature: 0.5,
+    tools: tools
   });
   return text;
 };
@@ -37,7 +48,6 @@ const generateAIObjectPlain = async (
     model: google("models/gemini-1.5-flash"),
     system,
     prompt,
-    temperature: 0.5,
   });
   return object;
 };
@@ -51,5 +61,9 @@ const generateAIStreamText = async (prompt: string) => {
   return result;
 };
 
-export { generateAIObject, generateAIObjectPlain, generateAIStreamText, generateAIText };
+export {
+  generateAIObject,
+  generateAIObjectPlain, generateAIPlainText, generateAIStreamText,
+  generateAIText
+};
 

@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Magic } from "@/components/ui/icons";
 import { Popover, PopoverContent } from "@/components/ui/popover";
-import { generateTagsSuggestions } from "@/lib/server/ai/google/generative";
+import { generateTagsTextSuggestions } from "@/lib/server/ai/google/generative";
 import { cn } from "@/lib/utils";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Check } from "lucide-react";
@@ -29,7 +29,7 @@ const AiTagsSuggestionAddon: React.FC<Props> = ({
 
   const generateSuggestions = async () => {
     setLoading(true);
-    const response = await generateTagsSuggestions(content);
+    const response = await generateTagsTextSuggestions(content);
     if (response && response.length > 0) {
       setSuggestions(response);
     }

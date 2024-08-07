@@ -1,7 +1,7 @@
-'use server'
+"use server";
 
 import { createOpenAI } from "@ai-sdk/openai";
-import { generateObject, streamText } from "ai";
+import { generateObject, generateText, streamText } from "ai";
 import { z, ZodSchema } from "zod";
 
 const groq = createOpenAI({
@@ -24,6 +24,19 @@ const generateAIObjectPlain = async (
   return object;
 };
 
+const generateAITextPlain = async (
+  system: string,
+  prompt: string,
+) => {
+  const { text } = await generateText({
+    model: groq("llama-3.1-8b-instant"),
+    system,
+    prompt,
+    temperature: 0.5,
+  });
+  return text;
+};
+
 const generateAIStreamText = async (prompt: string) => {
   const result = await streamText({
     model: groq("llama-3.1-8b-instant"),
@@ -33,4 +46,4 @@ const generateAIStreamText = async (prompt: string) => {
   return result;
 };
 
-export { generateAIObjectPlain, generateAIStreamText };
+export { generateAIObjectPlain, generateAIStreamText, generateAITextPlain };

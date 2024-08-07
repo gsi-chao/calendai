@@ -9,10 +9,11 @@ export const generateTitleSuggestions = async (
   try {
     const response = await generateAIObjectPlain(
       `You are a professional writer who crafts engaging posts for social platforms like LinkedIn, Facebook, and other media.`,
-      `Generate 5 compelling title suggestions for a post based on the following content: \n\n ${content} \n Only return the five items.`,
-      z.object({ data: z.array(z.string()) })
+      `Generate 5 title suggestions for a post based on the following content: \n\n ${content}, \n Return only the five titles, and omit the rest of the output.`,
+      z.object({ titles: z.array(z.string()) })
     );
-    if (response.data) {
+
+    if (response.titles) {
       // remove " " from the beginning of the string and straing characters like \n \t \r \ etc using regex
       return response.data.map((title: string) => {
         return title.replace(/^\s+/, "").replace(/[\n\t\r\\\"]/g, "");
