@@ -42,12 +42,17 @@ const CalendarContainer = ({ tasks }: Props) => {
       },
     };
   };
+  
+  const onOpenChange = () => {
+    setOpen(!open);
+    setSelectedTask(null)
+  }
 
   return (
     <>
       <NewTask
         open={open}
-        onOpenChange={() => setOpen(!open)}
+        onOpenChange={onOpenChange}
         defaultDate={defaultDate}
         task={selectedTask}
       />

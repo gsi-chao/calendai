@@ -7,19 +7,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { createTaskSubmitAction } from "./server/action.server";
+import {
+  createTaskSubmitAction,
+  updateTaskAction,
+} from "./server/action.server";
 import TaskForm from "./task-form";
 import { taskFormSchema, TaskFormType } from "./task-schema";
+import { FormStatusMode } from "./type";
 
 type Props = {
   defaultDate?: Date;
   task?: CalendarTask;
   onSuccess: () => void;
+  mode: FormStatusMode;
 };
 
 const TaskFormContainer: React.FC<Props> = ({
   defaultDate,
   task,
+  mode,
   onSuccess,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,9 +45,12 @@ const TaskFormContainer: React.FC<Props> = ({
   const onSubmitTask = async (data: TaskFormType) => {
     setIsSubmitting(true);
     try {
+      console.log('task', task)
       const json = generateJsonFromHtml(data.content);
       data.plainContent = generateTextFromJson(json);
-      const response = await createTaskSubmitAction(data);
+      const response = task?.id
+        ? await updateTaskAction(task?.id, data)
+        : await createTaskSubmitAction(data);
       if (response.success) {
         toast.success("Task created successfully");
         onSuccess();
@@ -59,7 +68,7 @@ const TaskFormContainer: React.FC<Props> = ({
       <TaskForm
         onSubmitTask={onSubmitTask}
         isSubmitting={isSubmitting}
-        mode={task?.id ? "preview" : "create"}
+        mode={mode}
       />
     </FormProvider>
   );

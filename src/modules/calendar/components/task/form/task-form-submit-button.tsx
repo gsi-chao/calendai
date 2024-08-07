@@ -7,16 +7,16 @@ import React from "react";
 
 type Props = {
   isSubmitting: boolean;
-  isEditing?: boolean;
+  disabled?: boolean;
 };
 
-const TaskFormSubmitButton: React.FC<Props> = ({ isSubmitting, isEditing }) => {
+const TaskFormSubmitButton: React.FC<Props> = ({ isSubmitting, disabled }) => {
   return (
     <DialogFooter>
       <Button
         type="submit"
         form="task-form"
-        disabled={isSubmitting || isEditing}
+        disabled={isSubmitting || disabled}
       >
         {isSubmitting ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

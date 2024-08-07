@@ -61,8 +61,10 @@ const PostDateField: React.FC<Props> = ({
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
+                disabled={{before: new Date()}}
                 selected={field.value}
                 onSelect={field.onChange}
+                
               />
               <div className="p-3 border-t border-border">
                 <TimePickerDemo setDate={field.onChange} date={field.value} />

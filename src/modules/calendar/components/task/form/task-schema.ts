@@ -5,7 +5,10 @@ export const taskFormSchema = z.object({
   content: z.string().min(30),
   plainContent: z.string().optional(),
   tags: z.string().optional(),
-  postDate: z.date().default(() => new Date()),
+  postDate: z
+    .date()
+    .min(new Date(), { message: "Post date should be in the future" })
+    .default(() => new Date()),
   coverImage: z.string().url(),
 });
 

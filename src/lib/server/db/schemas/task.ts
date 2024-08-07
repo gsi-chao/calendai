@@ -8,10 +8,12 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-export type StatusProvider = "pending" | "published";
+export type StatusProvider = "pending" | "published" | "scheduled" | "failed";
 export const statusEnum = pgEnum("status", [
   "pending",
-  "published"
+  "published",
+  "scheduled",
+  "failed",
 ]);
 
 const TaskTable = pgTable("task", {

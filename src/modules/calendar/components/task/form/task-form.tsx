@@ -17,11 +17,12 @@ import AiTitleSuggestionAddon from "../fields/ai-title-suggestion-addon";
 import PostDateField from "../fields/post-date";
 import TaskFormSubmitButton from "./task-form-submit-button";
 import { TaskFormType } from "./task-schema";
+import { FormStatusMode } from "./type";
 
 type Props = {
   onSubmitTask: (values: TaskFormType) => void;
   isSubmitting: boolean;
-  mode: "create" | "preview" | "edit";
+  mode: FormStatusMode;
 };
 
 const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
@@ -45,7 +46,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
         id="task-form"
       >
         <FormField
-          disabled={mode === "preview"}
+          disabled={mode === "PREVIEW"}
           control={form.control}
           name="content"
           render={({ field }) => (
@@ -64,7 +65,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
         />
         <FormField
           control={form.control}
-          disabled={mode === "preview"}
+          disabled={mode === "PREVIEW"}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -91,7 +92,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
           )}
         />
         <FormField
-          disabled={mode === "preview"}
+          disabled={mode === "PREVIEW"}
           control={form.control}
           name="tags"
           render={({ field }) => (
@@ -117,7 +118,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
           )}
         />
         <FormField
-          disabled={mode === "preview"}
+          disabled={mode === "PREVIEW"}
           control={form.control}
           name="coverImage"
           render={({ field }) => (
@@ -139,7 +140,7 @@ const TaskForm: React.FC<Props> = ({ onSubmitTask, isSubmitting, mode }) => {
         />
         <TaskFormSubmitButton
           isSubmitting={isSubmitting}
-          isEditing={mode === "preview"}
+          disabled={mode === "PREVIEW"}
         />
       </form>
     </Form>

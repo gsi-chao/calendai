@@ -5,6 +5,7 @@ import { inngest } from "@/lib/server/inngest/client";
 import {
   createTask,
   getCountUserUnPublishedPost,
+  updateTask,
 } from "@/lib/server/services/task";
 import { InsertResponse } from "@/lib/server/types/response";
 import { addHours, isAfter } from "date-fns";
@@ -48,6 +49,50 @@ export const createTaskSubmitAction = async (
       data: response,
     };
   } catch (e) {
-    return { success: false, message: "Failed to create task", data: null };
+    return { success: false, message: "Failed to create the task", data: null };
+  }
+};
+
+export const updateTaskAction = async (
+  taskId: number,
+  values: TaskFormType
+): Promise<ActionResponse<InsertResponse | null>> => {
+  try {
+    const parsed = taskFormSchema.safeParse(values);
+    if (!parsed.success) {
+      return { success: false, message: "Invalid values", data: null };
+    }
+
+    const response = await updateTask(taskId, parsed.data);
+
+    // TODO: Cancel the publish task if they have one
+
+    await inngest.send({
+      name: "tasks/reminder.deleted",
+      data: {
+        taskId,
+      },
+    });
+
+    // Send the task to the inngest function
+    if (isAfter(addHours(new Date(), 3), parsed.data.postDate)) {
+      await inngest.send({
+        name: "calendai/publish.now",
+        data: {
+          postDate: parsed.data.postDate,
+          content: response.plainContent,
+          userId: response.createdBy,
+          taskId: response.id,
+        },
+      });
+    }
+
+    return {
+      success: true,
+      message: "Task updated successfully",
+      data: response,
+    };
+  } catch (e) {
+    return { success: false, message: "Failed to update the task", data: null };
   }
 };

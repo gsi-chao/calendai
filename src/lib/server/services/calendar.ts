@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { and, eq, gt } from "drizzle-orm";
 
 import { db } from "../db/db";
 import { CalendarTable } from "../db/schemas";
@@ -96,5 +96,27 @@ export const getUserCalendarOrCreate = async (
     return response[0];
   } catch (e) {
     throw new Error("Failed to get calendar");
+  }
+};
+
+export const updateCalendarTask = async (taskId: number, postDate: Date) => {
+  if (!taskId) {
+    throw new Error("The task id is required");
+  }
+  if(postDate < new Date()) {
+    throw new Error("The post date must be greater than the current date");
+  }
+  try {
+    return await db
+      .update(CalendarTaskTable)
+      .set({ postDate })
+      .where(
+        and(
+          eq(CalendarTaskTable.taskId, taskId),
+          gt(CalendarTaskTable.postDate, new Date())
+        )
+      );
+  } catch (e) {
+    throw new Error("Failed to update calendar task");
   }
 };
