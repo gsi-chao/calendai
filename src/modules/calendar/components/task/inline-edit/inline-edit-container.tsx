@@ -20,7 +20,7 @@ const InlineEditContainer: React.FC<Props> = ({ event, open, onOpenChange }) => 
         <DialogHeader>
           <DialogTitle>{event.title}</DialogTitle>
         </DialogHeader>
-        <TaskFormContainer task={event} onSuccess={onOpenChange} />
+        <TaskFormContainer task={event} onSuccess={onOpenChange} mode="PREVIEW"/>
       </DialogContent>
     </Dialog>
   );

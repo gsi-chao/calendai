@@ -37,7 +37,7 @@ export const publishNow = inngest.createFunction(
     await updateTaskStatus(taskId, "scheduled");
     await step.sleepUntil("wait-until-postDate", postDate);
     try {
-      if ((process.env.NEXT_PUBLIC_ACTIVE_PUBLICATIONS = "true")) {
+      if ((process.env.NEXT_PUBLIC_ACTIVE_PUBLICATIONS === "true")) {
         const post = await createPost(content, userId);
         // update task status
         await updateTaskStatus(taskId, "published");
